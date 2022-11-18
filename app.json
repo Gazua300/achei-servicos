@@ -25,7 +25,8 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "permissions": []
+      "permissions": [],
+      "package": "com.gazua300.acheiservicos"
     },
     "web": {
       "favicon": "./assets/favicon.png"
