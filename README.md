@@ -1,12 +1,10 @@
 # Servicefinder
 
-Aplicativo móvel para contratação e cadastramento de serviços.
+Aplicativo móvel para cadastramento e publicação de serviços.
 
 
- O usuário realiza um cadastro usando nome, telefone e senha. Então poderá cadastrar um serviço presto por sua empresa ou por ele mesmo. Da mesma forma também pode contratar um serviço cadastrado por outra pessoa ou empresa.
+ Ao acessar o aplicativo o usuário poderá ver a lista de serviços cadastrados com o nome do serviço, descrição telefone e horário de atendimento. No canto superior direito dessa mesma lista de serviços está o ícone que redireciona a página para cadastrar novos serviços. O usuário poderá ver o seu serviço cadastrado na lista logo após o registro do mesmo na página de cadastramento.
 
 <br><br>
-<img src='./imgREADME/login.png' width='200'>
-<img src='./imgREADME/cadastrar.png' width='200'>
-<img src='./imgREADME/lista.png' width='200'>
-<img src='./imgREADME/perfil.png' width='200'>
+<img src='./imgREADME/cadastramento.jpeg' width='200'>
+<img src='./imgREADME/lista.jpeg' width='200'>
