@@ -1,4 +1,4 @@
-# Servicefinder
+# Achei Serviços
 
 Aplicativo móvel para cadastramento e publicação de serviços.
 
