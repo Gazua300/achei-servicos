@@ -13,13 +13,8 @@ import {
 
 
 export default function Detail(props){
-    const { job, perfil, getUser } = useContext(Context)
-
+    const { job } = useContext(Context)
     
-        
-    useEffect(()=>{
-        getUser()
-    }, [])
 
 
     

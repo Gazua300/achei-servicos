@@ -12,7 +12,6 @@ export const Provider = (props)=>{
   const [jobs, setJobs] = useState([])
   const [job, setJob] = useState({})
   const [perfil, setPerfil] = useState({})
-  const [detailHiredJob, setDetailHiredJob] = useState({})
   const [hiredJobs, setHiredJobs] = useState([])
 
 
@@ -48,44 +47,8 @@ export const Provider = (props)=>{
   }
 
 
-  const getUser = async()=>{
-    const id = await AsyncStorage.getItem('id')
-
-    axios.get(`${url}/user/${id}`).then(res=>{
-        setPerfil(res.data)
-    }).catch(e=>{
-        console.log(e.response.data)
-    })
-  }
-
-
-  const jobByProvider = async()=>{
-    const id = AsyncStorage.getItem('id')
-
-    axios.get(`${url}/provider/jobs/${id}`).then(res=>{
-      setProviderJob(res.data)
-    }).catch(e=>{
-      alert(e.response.data)
-    })
-  }
-
-
-  const getHiredJobs = async()=>{
-    const id = await AsyncStorage.getItem('id')
-
-    axios.get(`${url}/provider/${id}`).then(res=>{
-        setHiredJobs(res.data)
-    }).catch(e=>{
-        alert(e.response.data)
-    })
-}
-
-
   
-  return<Context.Provider value={{
-    getAllJobs, jobs, job, setJob, getToken, getId, jobByProvider, providerJob, perfil, setPerfil,
-    getUser, detailHiredJob, setDetailHiredJob, getHiredJobs, hiredJobs
-  }}>
+  return<Context.Provider value={{ getAllJobs, jobs, job, setJob, getToken, getId, setPerfil }}>
           { props.children }
         </Context.Provider>
 }
