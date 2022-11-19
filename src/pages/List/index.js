@@ -1,12 +1,15 @@
 import React, { useEffect, useState, useContext } from 'react'
 import styles from './style'
 import Context from '../../global/Context'
+import axios from 'axios'
+import { url } from '../../constants/urls'
 import { convertPhone } from '../../utils/convertPhone'
 import {
   View,
   Text,
   ImageBackground,
   ScrollView,
+  TouchableOpacity,
   RefreshControl
 } from 'react-native'
 
@@ -32,6 +35,16 @@ export default function List(props){
   }
 
 
+  const getJobById = (id)=>{
+    axios.get(`${url}/job/${id}`).then(res=>{
+      setJob(res.data)
+      props.navigation.navigate('Detalhes')
+    }).catch(e=>{
+      alert(e.response.data)
+    })
+  }
+
+
 
   return(
     <ImageBackground
@@ -51,7 +64,13 @@ export default function List(props){
                   </Text>
                   <Text style={styles.txtBtn}><Text style={styles.legend}>Descrição:</Text> {job.description}</Text>
                   <Text style={styles.txtBtn}><Text style={styles.legend}>Telefone:</Text> {convertPhone(job.phone)}</Text>
-                  <Text style={styles.txtBtn}><Text style={styles.legend}>Atendimento:</Text> {job.period}</Text>                 
+                  <Text style={styles.txtBtn}><Text style={styles.legend}>Atendimento:</Text> {job.period}</Text>
+                  <View style={styles.btnContainer}>
+                    <TouchableOpacity style={styles.btnNav}
+                      onPress={()=> getJobById(job.id)}>
+                      <Text style={styles.txtBtn}>Contratar serviço</Text>
+                    </TouchableOpacity>
+                  </View>                 
                 </View>
               </View>
             )

@@ -6,6 +6,7 @@ import ListAlt from 'react-native-vector-icons/FontAwesome'
 import ContactIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import List from './src/pages/List'
 import Register from './src/pages/Register'
+import Detail from './src/pages/Detail'
 import ContactUs from './src/pages/ContactUs'
 import { StatusBar, TouchableOpacity, View } from 'react-native'
 
@@ -58,6 +59,24 @@ export default function App(){
                     </TouchableOpacity>
                   )
                 })}/>
+
+              <Stack.Screen
+                name='Detalhes'
+                component={Detail}
+                options={({navigation})=> ({
+                  headerRight: ()=>(
+                    <TouchableOpacity onPress={()=> navigation.navigate('ContactUs')}>
+                      <ContactIcon name='email-send' size={30} color='#151E3D'/>
+                    </TouchableOpacity>
+                  ),
+                  title: 'Contratar serviço',
+                  headerLeft: ()=>(
+                    <TouchableOpacity onPress={()=> navigation.navigate('Register')}>
+                      <Add name='add-user' size={30} color='#151E3D'/>
+                    </TouchableOpacity>
+                  )
+                })}/>
+
               <Stack.Screen
                 name='ContactUs'
                 component={ContactUs}
