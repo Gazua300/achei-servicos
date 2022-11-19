@@ -7,15 +7,13 @@ import {
     Text,
     ImageBackground,
     StyleSheet,
-    TouchableOpacity,
-    Alert
+    TouchableOpacity
 } from "react-native"
 
 
 
 export default function Detail(props){
     const { job } = useContext(Context)
-    
 
 
     
