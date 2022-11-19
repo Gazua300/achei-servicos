@@ -7,7 +7,8 @@ import {
     Text,
     ImageBackground,
     StyleSheet,
-    TouchableOpacity
+    TouchableOpacity,
+    Alert
 } from "react-native"
 
 
@@ -20,16 +21,18 @@ export default function Detail(props){
     
     const addContact = async()=>{
         const { status } = await Contacts.requestPermissionsAsync()
-        if(status === 'granted'){}
-
-        await Contacts.presentFormAsync(null, {
-            [Contacts.Fields.Company]: job.title,
-            [Contacts.Fields.PhoneNumbers]: [
-                {
-                    number: `${job.phone}`
-                }
-            ]
-        })
+        if(status === 'granted'){
+            await Contacts.presentFormAsync(null, {
+                [Contacts.Fields.Company]: job.title,
+                [Contacts.Fields.PhoneNumbers]: [
+                    {
+                        number: `${job.phone}`
+                    }
+                ]
+            })
+        }else{
+            alert('O aplicativo não tem permissão para adicionar aos contatos. Ver nas configurações')
+        }        
     }
 
 
