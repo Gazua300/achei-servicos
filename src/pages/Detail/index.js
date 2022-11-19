@@ -24,7 +24,11 @@ export default function Detail(props){
 
         await Contacts.presentFormAsync(null, {
             [Contacts.Fields.Company]: job.title,
-            [Contacts.Fields.PhoneNumbers]: job.phone
+            [Contacts.Fields.PhoneNumbers]: [
+                {
+                    number: `${job.phone}`
+                }
+            ]
         })
     }
 
