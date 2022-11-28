@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#151E3D',
     width: '40%',
     height: 40,
-    borderRadius: 15,
+    borderRadius: 20,
     margin: 10
   },
   txtBtn: {

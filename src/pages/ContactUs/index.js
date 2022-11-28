@@ -1,10 +1,13 @@
 import Mail from 'react-native-vector-icons/Entypo'
 import Zap from 'react-native-vector-icons/FontAwesome'
+import ContactIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import {
     View,
     Text,
     StyleSheet,
-    ImageBackground
+    ImageBackground,
+    Linking,
+    TouchableOpacity
 } from "react-native"
 
 
@@ -16,13 +19,23 @@ export default function ContactUs(props){
             source={require('../../../assets/terceirizacao.jpg')}>
             <View style={styles.container}>
                 <Text style={styles.txtStyle}>
-                    Estamos na fase inicial do nosso aplicativo, então para eventuais
-                    problemas, sugestões ou reclamações. Entre em contato conosco:
+                    O aplicativo está em sua fase inicial, então para eventuais
+                    problemas, sugestões ou reclamações. Entre em contato:
                 </Text>
                 <Text style={styles.txtContact}>
-                    <Mail name='email' size={30} color='whitesmoke'/>{'\n'}
+                    <TouchableOpacity
+                        onPress={()=> Linking.openURL(
+                            `mailto:francadasilvaflamarion@gmail.com`
+                        )}>
+                        <ContactIcon name='email-send' size={50} color='rgba(250,250,250,0.8)'/>
+                    </TouchableOpacity>{'\n'}
                     francadasilvaflamarion@gmail.com{'\n\n\n'}
-                    <Zap name='whatsapp' size={30} color='whitesmoke'/>{'\n'}
+                    <TouchableOpacity
+                        onPress={()=> Linking.openURL(
+                            `https://api.whatsapp.com/send?phone=5571986239984`
+                        )}>
+                        <Zap name='whatsapp' size={50} color='green'/>
+                    </TouchableOpacity>{'\n'}
                     71 8623-9984
                 </Text>
             </View>
@@ -41,11 +54,11 @@ const styles = StyleSheet.create({
     txtStyle: {
         color: 'whitesmoke',
         textAlign: 'center',
-        margin: 30,
+        margin: '10%',
+        marginBottom: '15%',
         fontSize: 17
     },
     txtContact: {
-        marginTop: '20%',
         color: 'whitesmoke',
         textAlign: 'center',
         fontSize: 20

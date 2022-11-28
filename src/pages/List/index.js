@@ -59,7 +59,7 @@ export default function List(props){
               <View key={job.id}
                 style={styles.card}>
                 <View style={styles.cardContent}>
-                  <Text style={{color:'whitesmoke', fontSize:18, textAlign:'center', marginBottom:10}}>
+                  <Text style={{color:'whitesmoke', fontSize:18, textAlign:'center', marginBottom:'5%'}}>
                     {job.title}
                   </Text>
                   <Text style={styles.txtBtn}><Text style={styles.legend}>Descrição:</Text> {job.description}</Text>
@@ -68,7 +68,7 @@ export default function List(props){
                   <View style={styles.btnContainer}>
                     <TouchableOpacity style={styles.btnNav}
                       onPress={()=> getJobById(job.id)}>
-                      <Text style={styles.txtBtn}>Contratar serviço</Text>
+                      <Text style={styles.txtBtn}>Adicionar aos contatos</Text>
                     </TouchableOpacity>
                   </View>                 
                 </View>

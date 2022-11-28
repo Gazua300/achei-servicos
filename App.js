@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Provider } from './src/global/Context'
-import Add from 'react-native-vector-icons/Entypo'
+import Add from 'react-native-vector-icons/Ionicons'
 import ListAlt from 'react-native-vector-icons/FontAwesome'
 import ContactIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import List from './src/pages/List'
@@ -32,13 +32,13 @@ export default function App(){
                 options={({navigation})=> ({
                   headerLeft: ()=>(
                     <TouchableOpacity onPress={()=> navigation.navigate('Register')}>
-                      <Add name='add-user' size={30} color='#151E3D'/>
+                      <Add name='add-circle' size={30} color='whitesmoke'/>
                     </TouchableOpacity>
                   ),
                   title: 'Lista de Serviços',
                   headerRight: ()=>(
                     <TouchableOpacity onPress={()=> navigation.navigate('ContactUs')}>
-                      <ContactIcon name='email-send' size={30} color='#151E3D'/>
+                      <ContactIcon name='email-send' size={30} color='whitesmoke'/>
                     </TouchableOpacity>
                   )
                 })}/>
@@ -49,13 +49,13 @@ export default function App(){
                 options={({navigation})=> ({
                   headerLeft: ()=>(
                     <TouchableOpacity onPress={()=> navigation.navigate('List')}>
-                      <ListAlt name='list-alt' size={30} color='#151E3D'/>
+                      <ListAlt name='list-alt' size={30} color='whitesmoke'/>
                     </TouchableOpacity>
                   ),
                   title: 'Cadastrar Serviço',
                   headerRight: ()=>(
                     <TouchableOpacity onPress={()=> navigation.navigate('ContactUs')}>
-                      <ContactIcon name='email-send' size={30} color='#151E3D'/>
+                      <ContactIcon name='email-send' size={30} color='whitesmoke'/>
                     </TouchableOpacity>
                   )
                 })}/>
@@ -66,13 +66,13 @@ export default function App(){
                 options={({navigation})=> ({
                   headerRight: ()=>(
                     <TouchableOpacity onPress={()=> navigation.navigate('ContactUs')}>
-                      <ContactIcon name='email-send' size={30} color='#151E3D'/>
+                      <ContactIcon name='email-send' size={30} color='whitesmoke'/>
                     </TouchableOpacity>
                   ),
                   title: 'Contratar serviço',
                   headerLeft: ()=>(
                     <TouchableOpacity onPress={()=> navigation.navigate('Register')}>
-                      <Add name='add-user' size={30} color='#151E3D'/>
+                      <Add name='add-circle' size={30} color='whitesmoke'/>
                     </TouchableOpacity>
                   )
                 })}/>
@@ -84,12 +84,12 @@ export default function App(){
                   title: 'Contato',
                   headerLeft: ()=>(
                     <TouchableOpacity onPress={()=> navigation.navigate('List')}>
-                      <ListAlt name='list-alt' size={30} color='#151E3D'/>
+                      <ListAlt name='list-alt' size={30} color='whitesmoke'/>
                     </TouchableOpacity>
                   ),
                   headerRight: ()=>(
                     <TouchableOpacity onPress={()=> navigation.navigate('Register')}>
-                      <Add name='add-user' size={30} color='#151E3D'/>
+                      <Add name='add-circle' size={30} color='whitesmoke'/>
                     </TouchableOpacity>
                   )
                 })} />                

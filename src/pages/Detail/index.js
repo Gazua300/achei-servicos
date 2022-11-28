@@ -2,18 +2,22 @@ import { useContext, useEffect } from "react"
 import Context from "../../global/Context"
 import { convertPhone } from "../../utils/convertPhone"
 import * as Contacts from 'expo-contacts'
+import Add from 'react-native-vector-icons/Entypo'
+import Zap from 'react-native-vector-icons/FontAwesome'
 import {
     View,
     Text,
     ImageBackground,
     StyleSheet,
-    TouchableOpacity
+    TouchableOpacity,
+    Linking
 } from "react-native"
 
 
 
 export default function Detail(props){
     const { job } = useContext(Context)
+    const message = `Olá, vi seu serviço anunciado no aplicativo Loja de Serviços e gostaria de contratá-lo`
 
 
     
@@ -51,13 +55,22 @@ export default function Detail(props){
                         </Text>
                         <Text style={{color:'whitesmoke'}}>
                             <Text style={{fontWeight:'bold'}}>Atendimento:</Text> {job.period}
-                        </Text>                        
+                        </Text>
+                        <View style={styles.iconsContainer}>
+                            <TouchableOpacity
+                                onPress={addContact}>
+                                <Add name="add-user" size={30} color='rgba(250,250,250,0.7)'/>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={()=> Linking.openURL(
+                                    `https://api.whatsapp.com/send?phone=55${job.phone}
+                                    &text=${message}`
+                                )}>
+                                <Zap name="whatsapp" size={30} color='green'/>
+                            </TouchableOpacity>
+                        </View>                        
                     </View>                    
                 </View>
-                <TouchableOpacity style={styles.button}
-                    onPress={addContact}>
-                    <Text style={{color:'whitesmoke'}}>Salvar nos contatos</Text>
-                </TouchableOpacity>
             </View>
         </ImageBackground>
     )
@@ -83,17 +96,15 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: 'whitesmoke',
         textAlign: 'center',
-        marginBottom: 20
+        marginBottom: 5
     },
-    input: {
-        margin: 10,
-        borderWidth: 1,
-        borderRadius: 10,
-        borderColor: 'whitesmoke',
-        height: 40,
-        fontSize: 18,
-        paddingHorizontal: 10,
-        color: 'whitesmoke'
+    iconsContainer: {
+        display: 'flex',
+        flexDirection:'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginHorizontal: 30,
+        marginTop: 10 
     },
     button: {
         backgroundColor: '#151E3D',
