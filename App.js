@@ -8,11 +8,13 @@ import List from './src/pages/List'
 import Register from './src/pages/Register'
 import Detail from './src/pages/Detail'
 import ContactUs from './src/pages/ContactUs'
+import Splash from './src/pages/splash/Splash'
 import { StatusBar, TouchableOpacity, View } from 'react-native'
 
 
 
 const Stack = createNativeStackNavigator()
+
 
 export default function App(){
 
@@ -20,10 +22,29 @@ export default function App(){
   return(
         <Provider>
           <NavigationContainer>
-            <StatusBar backgroundColor='#151E3D'/>
+            <StatusBar backgroundColor='#151E3D'
+              barStyle='light-content'/>
             <Stack.Navigator
-              initialRouteName='List'
+              initialRouteName='Splash'
               screenOptions={screenOptions}>
+
+            
+            <Stack.Screen
+                name='Splash'
+                component={Splash}
+                options={({navigation})=> ({
+                  headerShown: false,
+                  headerLeft: ()=>(
+                    <TouchableOpacity onPress={()=> navigation.navigate('Register')}>
+                      <Add name='add-circle' size={30} color='whitesmoke'/>
+                    </TouchableOpacity>
+                  ),
+                  headerRight: ()=>(
+                    <TouchableOpacity onPress={()=> navigation.navigate('ContactUs')}>
+                      <ContactIcon name='email-send' size={30} color='whitesmoke'/>
+                    </TouchableOpacity>
+                  )
+                })}/>
               
               
               <Stack.Screen
