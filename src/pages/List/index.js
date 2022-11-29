@@ -19,15 +19,16 @@ import {
 export default function List(props){
   const { getAllJobs, jobs, setJob } = useContext(Context)  
   const [refreshing, setRefreshing] = useState(false)
+   
+  
 
-  
-  
   useEffect(()=>{
     getAllJobs()
   }, [])
 
 
   BackHandler.addEventListener('hardwareBackPress', ()=>{
+    
     return true
   })
   
@@ -38,8 +39,8 @@ export default function List(props){
 
 
   const onRefresh = useCallback(()=>{
-    setRefreshing(true)
     getAllJobs()
+    setRefreshing(true)    
     wait(3000).then(()=> setRefreshing(false))
   }, [])
 

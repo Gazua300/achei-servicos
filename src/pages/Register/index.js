@@ -15,7 +15,7 @@ import {
 
 
 export default function Register(props){
-  const { getAllJobs, getToken } = useContext(Context)
+  const { getAllJobs } = useContext(Context)
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [phone, setPhone] = useState('')

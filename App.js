@@ -24,10 +24,10 @@ export default function App(){
           <NavigationContainer>
             <StatusBar backgroundColor='#151E3D'
               barStyle='light-content'/>
+            
             <Stack.Navigator
               initialRouteName='Splash'
               screenOptions={screenOptions}>
-
             
             <Stack.Screen
                 name='Splash'
@@ -44,8 +44,7 @@ export default function App(){
                       <ContactIcon name='email-send' size={30} color='whitesmoke'/>
                     </TouchableOpacity>
                   )
-                })}/>
-              
+                })}/>              
               
               <Stack.Screen
                 name='List'

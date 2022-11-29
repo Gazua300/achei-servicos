@@ -8,11 +8,9 @@ const Context = createContext()
 
 
 export const Provider = (props)=>{
-  const [providerJob, setProviderJob] = useState([])
   const [jobs, setJobs] = useState([])
   const [job, setJob] = useState({})
   const [perfil, setPerfil] = useState({})
-  const [hiredJobs, setHiredJobs] = useState([])
 
 
 
@@ -48,7 +46,15 @@ export const Provider = (props)=>{
 
 
   
-  return<Context.Provider value={{ getAllJobs, jobs, job, setJob, getToken, getId, setPerfil }}>
+  return<Context.Provider value={{
+    getAllJobs,
+    jobs,
+    job,
+    setJob,
+    getToken,
+    getId,
+    setPerfil
+  }}>
           { props.children }
         </Context.Provider>
 }

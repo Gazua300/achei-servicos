@@ -18,11 +18,7 @@ export default function Splash(props) {
       <LottieView
         autoPlay
         speed={1}
-        source={require('../../../assets/splash.json')}
-        onAnimationFinish={()=>{
-          props.navigation.navigate('List')
-        }}
-      />
+        source={require('../../../assets/splash.json')}/>
     </View>
   );
 }

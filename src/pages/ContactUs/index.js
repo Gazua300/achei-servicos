@@ -1,4 +1,3 @@
-import Mail from 'react-native-vector-icons/Entypo'
 import Zap from 'react-native-vector-icons/FontAwesome'
 import ContactIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import {
