@@ -2,7 +2,7 @@
   "expo": {
     "name": "Loja de Serviços",
     "slug": "achei-servicos",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -25,6 +25,7 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#151E3D"
       },
+      "versionCode": 3,
       "permissions": ["android.permission.READ_CONTACTS", "android.permission.WRITE_CONTACTS"],
       "package": "com.gazua300.acheiservicos"
     },
