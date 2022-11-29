@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext, useCallback } from 'react'
 import styles from './style'
 import Context from '../../global/Context'
 import axios from 'axios'
@@ -10,7 +10,8 @@ import {
   ImageBackground,
   ScrollView,
   TouchableOpacity,
-  RefreshControl
+  RefreshControl,
+  BackHandler
 } from 'react-native'
 
 
@@ -31,13 +32,18 @@ export default function List(props){
   })
   
 
-
-  const onRefresh = ()=>{
-    setRefreshing(true)
-    setTimeout(()=>{
-      setRefreshing(false)
-    }, 2000)
+  const wait = (timout)=>{    
+    return new Promise(resolve => setTimeout(resolve, timout))
   }
+
+
+  const onRefresh = useCallback(()=>{
+    setRefreshing(true)
+    getAllJobs()
+    wait(3000).then(()=> setRefreshing(false))
+  }, [])
+
+  
 
 
   const getJobById = (id)=>{
