@@ -24,6 +24,11 @@ export default function List(props){
   useEffect(()=>{
     getAllJobs()
   }, [])
+
+
+  BackHandler.addEventListener('hardwareBackPress', ()=>{
+    return true
+  })
   
 
 

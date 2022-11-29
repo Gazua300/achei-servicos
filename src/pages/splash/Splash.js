@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import LottieView from 'lottie-react-native';
-import { StyleSheet, View, BackHandler } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 export default function Splash(props) {
   
@@ -12,11 +12,7 @@ export default function Splash(props) {
   }, [])
 
 
-  BackHandler.addEventListener('hardwareBackPress', ()=>{
-    return true
-  })
-
-
+ 
   return (
     <View style={styles.animationContainer}>
       <LottieView
