@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import Context from '../../global/Context'
 import axios from 'axios'
 import { url } from '../../constants/urls'
@@ -15,7 +15,7 @@ import {
 
 
 export default function Register(props){
-  const { getAllJobs } = useContext(Context)
+  const { expoPushToken, getToken, sendPushNotifications } = useContext(Context)
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [phone, setPhone] = useState('')
@@ -23,19 +23,21 @@ export default function Register(props){
   const placeholderBackground = 'rgba(255, 255, 255, 0.5)'
   
 
-
+  
   const registJob = ()=>{
     const body = {
       title,
       description,
       phone,
-      period
+      period,
+      push_token: expoPushToken
     }
     
     axios.post(`${url}/jobs`, body).then(res=>{
+      getToken(res.data.id)
       alert(`${title} cadastrado com sucesso!`)
-      getAllJobs()
       props.navigation.navigate('List')
+      sendPushNotifications('Novo serviço cadastrado', `${title} acaba de ser cadastrado`)
     }).catch(err=>{
       alert(err.response.data)
     })
@@ -49,7 +51,6 @@ export default function Register(props){
     setPhone('')
     setTitle('')
   }
-
 
 
 

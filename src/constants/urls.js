@@ -1,1 +1,1 @@
-export const url = "https://more-deploys.herokuapp.com"
+export const url = "https://achei-servicos-server.onrender.com"
