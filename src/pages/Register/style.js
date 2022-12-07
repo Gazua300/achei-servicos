@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   formContainer: {
+    marginHorizontal: 20,
     marginTop: 50
   },
   btnContainer: {
@@ -24,10 +25,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#151E3D',
-    width: '40%',
+    width: '45%',
     height: 40,
     borderRadius: 20,
-    margin: 10
+    margin: 10,
+
   },
   txtBtn: {
     color: 'whitesmoke',

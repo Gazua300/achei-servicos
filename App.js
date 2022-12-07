@@ -9,7 +9,7 @@ import Register from './src/pages/Register'
 import Detail from './src/pages/Detail'
 import ContactUs from './src/pages/ContactUs'
 import Splash from './src/pages/splash/Splash'
-import { StatusBar, TouchableOpacity, View } from 'react-native'
+import { StatusBar, TouchableOpacity } from 'react-native'
 
 
 
@@ -85,8 +85,8 @@ export default function App(){
                 component={Detail}
                 options={({navigation})=> ({
                   headerRight: ()=>(
-                    <TouchableOpacity onPress={()=> navigation.navigate('ContactUs')}>
-                      <ContactIcon name='email-send' size={30} color='whitesmoke'/>
+                    <TouchableOpacity onPress={()=> navigation.navigate('List')}>
+                      <ListAlt name='list-alt' size={30} color='whitesmoke'/>
                     </TouchableOpacity>
                   ),
                   title: 'Contratar serviço',

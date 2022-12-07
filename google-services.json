@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "842708811344",
+    "project_id": "acheiservicos",
+    "storage_bucket": "acheiservicos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:842708811344:android:9445af5e021fd034fd5b55",
+        "android_client_info": {
+          "package_name": "com.gazua300.acheiservicos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "842708811344-e30tvov52h3ulkthjqflpstg0dd9a1qr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANwhLn8LOFDbWUGxH_-9Hbrge5yxFL_14"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "842708811344-e30tvov52h3ulkthjqflpstg0dd9a1qr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

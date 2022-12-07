@@ -13,6 +13,7 @@ import {
   RefreshControl,
   BackHandler
 } from 'react-native'
+// import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 
@@ -23,6 +24,10 @@ export default function List(props){
   
 
   useEffect(()=>{
+    // (async()=>{
+    //   const tokens = await AsyncStorage.getAllKeys()
+    //   console.log(tokens)
+    // })()
     getAllJobs()
   }, [])
 
@@ -47,8 +52,8 @@ export default function List(props){
   
 
 
-  const getJobById = (id)=>{
-    axios.get(`${url}/job/${id}`).then(res=>{
+  const getJobById = (job)=>{
+    axios.get(`${url}/job/${job.id}`).then(res=>{
       setJob(res.data)
       props.navigation.navigate('Detalhes')
     }).catch(e=>{
@@ -79,7 +84,7 @@ export default function List(props){
                   <Text style={styles.txtBtn}><Text style={styles.legend}>Atendimento:</Text> {job.period}</Text>
                   <View style={styles.btnContainer}>
                     <TouchableOpacity style={styles.btnNav}
-                      onPress={()=> getJobById(job.id)}>
+                      onPress={()=> getJobById(job)}>
                       <Text style={styles.txtBtn}>Adicionar aos contatos</Text>
                     </TouchableOpacity>
                   </View>                 

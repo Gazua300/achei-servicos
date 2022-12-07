@@ -1,23 +1,38 @@
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import Context from "../../global/Context"
 import { convertPhone } from "../../utils/convertPhone"
 import * as Contacts from 'expo-contacts'
 import Add from 'react-native-vector-icons/Entypo'
 import Zap from 'react-native-vector-icons/FontAwesome'
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import axios from "axios"
+import { url } from "../../constants/urls"
+import styles from './styles'
 import {
     View,
     Text,
     ImageBackground,
-    StyleSheet,
     TouchableOpacity,
-    Linking
+    Linking,
+    Alert
 } from "react-native"
 
 
 
 export default function Detail(props){
-    const { job } = useContext(Context)
+    const { job, sendPushNotifications } = useContext(Context)
     const message = `Olá, vi seu serviço anunciado no aplicativo Loja de Serviços e gostaria de contratá-lo`
+    const [jobId, setJobId] = useState('')
+
+
+    useEffect(()=>{
+        (async()=>{
+            const id = await AsyncStorage.getItem(job.id)
+            if(id){
+             setJobId(id)
+            }
+        })()
+    }, [])
 
 
     
@@ -38,6 +53,37 @@ export default function Detail(props){
     }
 
 
+    const confirmDelJob = ()=>{
+        Alert.alert(
+            'Atenção!',
+            'Tem certeza que deseja excluir o serviço da lista?',
+            [
+                {
+                    text:'Cancelar'
+                },
+                {
+                    text:'Ok',
+                    onPress: ()=> delJob()
+                }
+            ]            
+        )
+    }
+    
+    
+    const delJob = ()=>{
+        axios.delete(`${url}/job/${job.id}`).then(async(res)=>{
+            alert(res.data)
+            await AsyncStorage.removeItem(job.id)
+            props.navigation.navigate('List')
+            sendPushNotifications('Serviço exlcuido', `${job.title} acaba de ser excluído`)
+        }).catch(e=>{
+            Alert.alert(
+                'Erro ao excluir serviço:',
+                e.response.data
+
+            )
+        })
+    }
 
 
     return(
@@ -47,15 +93,19 @@ export default function Detail(props){
                 <View style={styles.cardContainer}> 
                     <Text style={styles.title}>{job.title}</Text>
                     <View style={{margin:15}}>
-                        <Text style={{color:'whitesmoke'}}>
-                            <Text style={{fontWeight:'bold'}}>Descrição:</Text> {job.description}
-                        </Text>
-                        <Text style={{color:'whitesmoke'}}>
-                            <Text style={{fontWeight:'bold'}}>Telefone:</Text> {convertPhone(job.phone)}
-                        </Text>
-                        <Text style={{color:'whitesmoke'}}>
-                            <Text style={{fontWeight:'bold'}}>Atendimento:</Text> {job.period}
-                        </Text>
+                        <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+                            <View>
+                                <Text style={{color:'whitesmoke'}}>
+                                    <Text style={{fontWeight:'bold'}}>Descrição:</Text> {job.description}
+                                </Text>
+                                <Text style={{color:'whitesmoke'}}>
+                                    <Text style={{fontWeight:'bold'}}>Telefone:</Text> {convertPhone(job.phone)}
+                                </Text>
+                                <Text style={{color:'whitesmoke'}}>
+                                    <Text style={{fontWeight:'bold'}}>Atendimento:</Text> {job.period}
+                                </Text>
+                            </View>                            
+                        </View>
                         <View style={styles.iconsContainer}>
                             <TouchableOpacity
                                 onPress={addContact}>
@@ -65,53 +115,22 @@ export default function Detail(props){
                                 onPress={()=> Linking.openURL(
                                     `https://api.whatsapp.com/send?phone=55${job.phone}
                                     &text=${message}`
-                                )}>
+                                    )}>
                                 <Zap name="whatsapp" size={30} color='green'/>
                             </TouchableOpacity>
                         </View>                        
-                    </View>                    
+                    </View>
                 </View>
+                {!jobId ? null : (
+                    <TouchableOpacity style={styles.button}
+                        onPress={confirmDelJob}>
+                        <Text style={{color:'whitesmoke', fontSize:15}}>
+                            Deletar serviço
+                        </Text>
+                    </TouchableOpacity>
+                )}
             </View>
         </ImageBackground>
     )
 }
 
-const styles = StyleSheet.create({
-    bgImage: {
-        flex: 1
-      },
-    container: {
-        flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.6)'
-    },
-    cardContainer: {
-        borderWidth: 1,
-        borderColor: 'whitesmoke',
-        marginTop: 50,
-        marginHorizontal: 10,
-        borderRadius: 10,
-        padding: 5
-    },
-    title: {
-        fontSize: 20,
-        color: 'whitesmoke',
-        textAlign: 'center',
-        marginBottom: 5
-    },
-    iconsContainer: {
-        display: 'flex',
-        flexDirection:'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginHorizontal: 30,
-        marginTop: 10 
-    },
-    button: {
-        backgroundColor: '#151E3D',
-        padding: 5,
-        alignItems: 'center',
-        borderRadius: 10,
-        marginTop:'20%',
-        marginHorizontal: '20%'        
-    }
-})
