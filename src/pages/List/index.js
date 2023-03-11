@@ -13,7 +13,6 @@ import {
   RefreshControl,
   BackHandler
 } from 'react-native'
-// import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 
@@ -24,10 +23,6 @@ export default function List(props){
   
 
   useEffect(()=>{
-    // (async()=>{
-    //   const tokens = await AsyncStorage.getAllKeys()
-    //   console.log(tokens)
-    // })()
     getAllJobs()
   }, [])
 
@@ -60,7 +55,7 @@ export default function List(props){
       alert(e.response.data)
     })
   }
-
+  
 
 
   return(
@@ -69,7 +64,7 @@ export default function List(props){
       style={styles.bgImage}>
       <View style={styles.container}>
         <ScrollView refreshControl={<RefreshControl onRefresh={onRefresh}
-          refreshing={refreshing}/>}>
+          refreshing={refreshing}/>}>          
 
           {jobs && jobs.map(job=>{
             return(

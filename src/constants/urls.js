@@ -1,1 +1,1 @@
-export const url = "https://achei-servicos-server.onrender.com"
+export const url = "https://acheiservicos-server-production.up.railway.app"

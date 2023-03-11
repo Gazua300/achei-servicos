@@ -35,7 +35,7 @@ export default function ContactUs(props){
                         )}>
                         <Zap name='whatsapp' size={50} color='green'/>
                     </TouchableOpacity>{'\n'}
-                    71 8623-9984
+                    71 8850-0067
                 </Text>
             </View>
         </ImageBackground>
