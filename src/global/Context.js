@@ -12,7 +12,7 @@ const Context = createContext()
 
 Notifications.setNotificationHandler({
   handleNotification: async()=>({
-    shouldPlaySound: false,
+    shouldPlaySound: true,
     shouldShowAlert: true,
     shouldSetBadge: true
   })

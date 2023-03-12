@@ -4,6 +4,7 @@ import Context from '../../global/Context'
 import axios from 'axios'
 import { url } from '../../constants/urls'
 import { convertPhone } from '../../utils/convertPhone'
+import { Searchbar } from 'react-native-paper'
 import {
   View,
   Text,
@@ -19,6 +20,7 @@ import {
 export default function List(props){
   const { getAllJobs, jobs, setJob } = useContext(Context)  
   const [refreshing, setRefreshing] = useState(false)
+  const [searchWord, setSearchWord] = useState('')
    
   
 
@@ -57,16 +59,25 @@ export default function List(props){
   }
   
 
+  const found = jobs && jobs.filter(res=>{
+    return res.title.toLowerCase().includes(searchWord.toLocaleLowerCase())
+  })
+
 
   return(
     <ImageBackground
       source={ require('../../../assets/terceirizacao.jpg') }
-      style={styles.bgImage}>
+      style={styles.bgImage}>        
       <View style={styles.container}>
+        <Searchbar style={{backgroundColor:'#151E3D', marginBottom:10, marginHorizontal:10}} 
+          placeholder='Título do serviço'
+          placeholderTextColor='whitesmoke' 
+          color='white'
+          onChangeText={setSearchWord}
+          value={searchWord}/>
         <ScrollView refreshControl={<RefreshControl onRefresh={onRefresh}
-          refreshing={refreshing}/>}>          
-
-          {jobs && jobs.map(job=>{
+          refreshing={refreshing}/>}>
+          {found && found.map(job=>{
             return(
               <View key={job.id}
                 style={styles.card}>

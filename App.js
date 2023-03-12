@@ -50,6 +50,7 @@ export default function App(){
                 name='List'
                 component={List}
                 options={({navigation})=> ({
+                  headerShown: false,
                   headerLeft: ()=>(
                     <TouchableOpacity onPress={()=> navigation.navigate('Register')}>
                       <Add name='add-circle' size={30} color='whitesmoke'/>
