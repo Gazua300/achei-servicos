@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react'
 import * as Notifications from 'expo-notifications'
-import * as Device from 'expo-device'
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { url } from '../constants/urls'
@@ -25,25 +24,14 @@ export const Provider = (props)=>{
   const [expoPushToken, setExpoPushToken] = useState('')
   
 
+  
 
   useEffect(()=>{
     registerForPushNotificationsAsync().then(token=>{
       setExpoPushToken(token)
     })
   }, [])
-
-
-
-  const getToken = async(tk)=>{
-    try{
-
-      await AsyncStorage.setItem(tk, tk)
-
-    }catch(e){
-      alert(e)
-    }
-  }
-  
+    
   
   const getAllJobs = ()=>{
     axios.get(`${url}/jobs`).then(res=>{
@@ -67,23 +55,21 @@ export const Provider = (props)=>{
       })
     }
 
-    if(Device.isDevice){
-      const { status: existingStatus } = await Notifications.getPermissionsAsync()
-      let finalStatus = existingStatus
-      if(existingStatus !== 'granted'){
-        const { status } = await Notifications.requestPermissionsAsync()
-        finalStatus = status
-      }
-      if(finalStatus !== 'granted'){
-        alert('Dispositivo não concedeu permissão para receber token de noficação!')
-        return
-      }
-
-      token = (await Notifications.getExpoPushTokenAsync()).data
-      console.log(token)      
-    }else{
-      alert('Você deve usar um dispositivo fisico para notificações')
+    const { status: existingStatus } = await Notifications.getPermissionsAsync()
+    let finalStatus = existingStatus
+    
+    if(existingStatus !== 'granted'){
+      const { status } = await Notifications.requestPermissionsAsync()
+      finalStatus = status
     }
+    if(finalStatus !== 'granted'){
+      alert('Dispositivo não concedeu permissão para receber token de noficação!')
+      return
+    }
+
+    token = (await Notifications.getExpoPushTokenAsync()).data
+    console.log(token)  
+    
     return token
   }
 
@@ -128,7 +114,6 @@ export const Provider = (props)=>{
     jobs,
     job,
     setJob,
-    getToken,
     expoPushToken,
     updatePushToken,
     sendPushNotifications

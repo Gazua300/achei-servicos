@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import LottieView from 'lottie-react-native';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ImageBackground } from 'react-native';
 
 export default function Splash(props) {
   
@@ -14,12 +14,15 @@ export default function Splash(props) {
 
  
   return (
-    <View style={styles.animationContainer}>
-      <LottieView
-        autoPlay
-        speed={1}
-        source={require('../../../assets/splash.json')}/>
-    </View>
+    <ImageBackground style={{flex:1}}
+      source={require('../../../assets/splash.png')}>
+      <View style={styles.animationContainer}>      
+        <LottieView
+          autoPlay
+          speed={1}
+          source={require('../../../assets/splash.json')}/>
+      </View>
+    </ImageBackground>
   );
 }
 

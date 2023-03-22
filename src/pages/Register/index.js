@@ -15,7 +15,7 @@ import {
 
 
 export default function Register(props){
-  const { expoPushToken, getToken, sendPushNotifications } = useContext(Context)
+  const { expoPushToken, sendPushNotifications } = useContext(Context)
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [phone, setPhone] = useState('')
@@ -34,7 +34,6 @@ export default function Register(props){
     }
     
     axios.post(`${url}/jobs`, body).then(res=>{
-      getToken(res.data.id)
       alert(`${title} cadastrado com sucesso!`)
       props.navigation.navigate('List')
       sendPushNotifications('Novo serviço cadastrado', `${title} acaba de ser cadastrado`)

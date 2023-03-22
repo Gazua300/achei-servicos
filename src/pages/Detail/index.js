@@ -1,10 +1,11 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState, useRef } from "react"
 import Context from "../../global/Context"
 import { convertPhone } from "../../utils/convertPhone"
 import * as Contacts from 'expo-contacts'
 import Add from 'react-native-vector-icons/Entypo'
 import Zap from 'react-native-vector-icons/FontAwesome'
-import AsyncStorage from "@react-native-async-storage/async-storage"
+import * as ImagePicker from 'expo-image-picker'
+// import { Video } from "expo-av"
 import axios from "axios"
 import { url } from "../../constants/urls"
 import styles from './styles'
@@ -14,26 +15,39 @@ import {
     ImageBackground,
     TouchableOpacity,
     Linking,
-    Alert
+    Image,
+    Button,
+    Alert,
+    FlatList,
+    Modal
 } from "react-native"
 
 
 
 export default function Detail(props){
-    const { job, sendPushNotifications } = useContext(Context)
+    const { job } = useContext(Context)
     const message = `Olá, vi seu serviço anunciado no aplicativo Loja de Serviços e gostaria de contratá-lo`
-    const [jobId, setJobId] = useState('')
+    // const videoRef = useRef(null)
+    const [images, setImages] = useState([])
+    const [image, setImage] = useState(null)
+    // const [video, setVideo] = useState(null)
+    // const [status, setStatus] = useState({})
+    const [showModal,setShowModal] = useState(false)
+    
 
 
     useEffect(()=>{
-        (async()=>{
-            const id = await AsyncStorage.getItem(job.id)
-            if(id){
-             setJobId(id)
-            }
-        })()
-    }, [])
-
+        getImages()
+    }, [])    
+    
+    
+    const getImages = ()=>{
+        axios.get(`${url}/image/${job.id}`).then(res=>{
+            setImages(res.data)
+        }).catch(e=>{
+            console.log(e.response.data)
+        })
+    }
 
     
     const addContact = async()=>{
@@ -48,42 +62,122 @@ export default function Detail(props){
                 ]
             })
         }else{
-            alert('O aplicativo não tem permissão para adicionar aos contatos. Ver nas configurações')
+            Alert.alert(
+               'Necessário permissão para acessar os contatos',
+               'O aplicativo Loja de Serviço não teve permissão para adicionar contatos. Se desejar o redirecionaremos para as configurações para ativar as permissões?',
+                [
+                    {
+                        text:'Cancelar'
+                    },
+                    {
+                        text:'Ok',
+                        onPress: ()=> Linking.openSettings()                        
+                    }
+                ]
+
+            )
         }        
     }
 
 
-    const confirmDelJob = ()=>{
+    const sendImage = ()=>{
+        const formData = new FormData()
+        formData.append('image', {
+            name: image,
+            uri: image,
+            type: 'image/jpg' || 'image/png' || 'video/mp4'
+        })
+
+        axios.create({
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).post(`${url}/image/${job.id}`, formData).then(res=>{
+            alert(res.data)
+        }).catch(e=>{
+            alert(e)
+        })
+    }
+
+
+    const addImage = async()=>{
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync()
+
+        if(status !== 'granted'){
+            Alert.alert(
+                'Necessário permissão para acessar arquivos',
+                'O aplicativo Loja de Serviço não teve permissão para acessar suas imagens. Se desejar o redirecionaremos para as configurações para ativar as permissões?',
+                [
+                    {
+                        text:'Cancelar'
+                    },
+                    {
+                        text:'Ok',
+                        onPress: ()=> Linking.openSettings()                        
+                    }
+                ]
+            )            
+        }
+
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            quality: 1
+        })
+
+        // console.log(result)
+        
+        if(!result.canceled){
+            const uriArray = result?.uri.split('')
+            const lastLetter = uriArray.length - 1
+            const fileType = `${uriArray[lastLetter - 1]}${uriArray[lastLetter]}`
+            if(fileType === 'ng' || fileType === 'eg' || fileType === 'pg'){
+                setImage(result.uri)
+                sendImage()
+                getImages()
+            }else if(fileType === 'p4'){
+                Alert.alert(
+                    'Ainda não é possível postar vídeos',
+                    'Estamos em fase de testes para esta operação para habilitarmos na nova atualização do app. Deseja retornar e escolher uma imagem?',
+                    [
+                        {
+                            text:'Cancelar'
+                        },
+                        {
+                            text:'Ok',
+                            onPress: ()=> addImage()
+                        }
+                    ]
+                )
+            }
+        }
+
+    }
+
+
+    const removeImage = (id)=>{
         Alert.alert(
-            'Atenção!',
-            'Tem certeza que deseja excluir o serviço da lista?',
+            'Deletar imagem',
+            'Tem certeza que deseja excluir a imagem selecionada',
             [
                 {
                     text:'Cancelar'
                 },
                 {
                     text:'Ok',
-                    onPress: ()=> delJob()
+                    onPress: ()=>{
+                        axios.delete(`${url}/image/${id}`).then(res=>{
+                            alert(res.data)
+                            getImages()
+                        }).catch(e=>{
+                            alert(e.response.data)
+                        })
+                    }
                 }
-            ]            
+            ]
         )
     }
-    
-    
-    const delJob = ()=>{
-        axios.delete(`${url}/job/${job.id}`).then(async(res)=>{
-            alert(res.data)
-            await AsyncStorage.removeItem(job.id)
-            props.navigation.navigate('List')
-            sendPushNotifications('Serviço exlcuido', `${job.title} acaba de ser excluído`)
-        }).catch(e=>{
-            Alert.alert(
-                'Erro ao excluir serviço:',
-                e.response.data
 
-            )
-        })
-    }
 
 
     return(
@@ -121,14 +215,61 @@ export default function Detail(props){
                         </View>                        
                     </View>
                 </View>
-                {!jobId ? null : (
-                    <TouchableOpacity style={styles.button}
-                        onPress={confirmDelJob}>
-                        <Text style={{color:'whitesmoke', fontSize:15}}>
-                            Deletar serviço
-                        </Text>
-                    </TouchableOpacity>
-                )}
+                
+                <Modal
+                    animationType="fade" 
+                    transparent
+                    visible={showModal}>
+                    <View style={{
+                        flex:1,
+                        alignItems:'center',
+                        justifyContent:'center',
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)'
+                    }}>
+                        <Button title="fechar" onPress={()=> setShowModal(false)}/>
+                        <Image style={{width:300, height:500, margin:10}}
+                            source={{ uri: image?.imageSrc }}/>
+                    </View>
+                </Modal>
+                
+                <TouchableOpacity onPress={addImage} 
+                    style={{
+                        backgroundColor:'#151E3D',
+                        padding:10,
+                        borderRadius:15,
+                        marginHorizontal:'30%',
+                        marginVertical:20
+                    }}>
+                    <Text style={{textAlign:'center', fontSize:15, color:'whitesmoke'}}>
+                        Adicionar imnagem
+                    </Text>
+                </TouchableOpacity>
+                
+                {/* <Video style={{width:100, height:100, borderRadius:10}}
+                    ref={videoRef}
+                    source={{ uri: video }}
+                    useNativeControls
+                    resizeMode="cover"
+                    isLooping
+                    onPlaybackStatusUpdate={(status)=> setShowModal(()=> status)}/> */}
+                {/* <View style={{alignItems:'center'}}> */}
+
+                <FlatList
+                    contentContainerStyle={{alignItems:'center'}}
+                    data={images}
+                    keyExtractor={image => image.imageId}
+                    numColumns={3}
+                    renderItem={({item: image})=>(
+                        <TouchableOpacity onLongPress={()=> removeImage(image.imageId)}
+                            onPress={()=>{
+                                setShowModal(true)
+                                setImage(image)
+                            }}>
+                            <Image style={{width:100, height:100, margin:10, borderRadius:10}}
+                                source={{ uri: image?.imageSrc }}/>
+                        </TouchableOpacity>                        
+                    )}/>
+                {/* </View> */}
             </View>
         </ImageBackground>
     )
