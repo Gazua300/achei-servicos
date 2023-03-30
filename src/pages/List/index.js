@@ -69,12 +69,16 @@ export default function List(props){
       source={ require('../../../assets/terceirizacao.jpg') }
       style={styles.bgImage}>        
       <View style={styles.container}>
-        <Searchbar style={{backgroundColor:'#151E3D', marginBottom:10, marginHorizontal:10}} 
+        <Searchbar style={{
+          backgroundColor:'rgba(21, 30, 61, 0.7)',
+          marginBottom:10, 
+          marginHorizontal:10}} 
           placeholder='Título do serviço'
-          placeholderTextColor='whitesmoke' 
+          placeholderTextColor='rgba(255, 255, 255, 0.5)' 
           color='white'
           onChangeText={setSearchWord}
-          value={searchWord}/>
+          value={searchWord}
+          />
         <ScrollView refreshControl={<RefreshControl onRefresh={onRefresh}
           refreshing={refreshing}/>}>
           {found && found.map(job=>{

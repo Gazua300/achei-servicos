@@ -33,17 +33,7 @@ export default function App(){
                 name='Splash'
                 component={Splash}
                 options={({navigation})=> ({
-                  headerShown: false,
-                  headerLeft: ()=>(
-                    <TouchableOpacity onPress={()=> navigation.navigate('Register')}>
-                      <Add name='add-circle' size={30} color='whitesmoke'/>
-                    </TouchableOpacity>
-                  ),
-                  headerRight: ()=>(
-                    <TouchableOpacity onPress={()=> navigation.navigate('ContactUs')}>
-                      <ContactIcon name='email-send' size={30} color='whitesmoke'/>
-                    </TouchableOpacity>
-                  )
+                  headerShown: false
                 })}/>              
               
               <Stack.Screen

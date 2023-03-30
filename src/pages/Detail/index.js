@@ -4,7 +4,7 @@ import { convertPhone } from "../../utils/convertPhone"
 import * as Contacts from 'expo-contacts'
 import Add from 'react-native-vector-icons/Entypo'
 import Zap from 'react-native-vector-icons/FontAwesome'
-import * as ImagePicker from 'expo-image-picker'
+// import * as ImagePicker from 'expo-image-picker'
 // import { Video } from "expo-av"
 import axios from "axios"
 import { url } from "../../constants/urls"
@@ -80,103 +80,103 @@ export default function Detail(props){
     }
 
 
-    const sendImage = ()=>{
-        const formData = new FormData()
-        formData.append('image', {
-            name: image,
-            uri: image,
-            type: 'image/jpg' || 'image/png' || 'video/mp4'
-        })
+    // const sendImage = ()=>{
+    //     const formData = new FormData()
+    //     formData.append('image', {
+    //         name: image,
+    //         uri: image,
+    //         type: 'image/jpg' || 'image/png' || 'video/mp4'
+    //     })
 
-        axios.create({
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        }).post(`${url}/image/${job.id}`, formData).then(res=>{
-            alert(res.data)
-        }).catch(e=>{
-            alert(e)
-        })
-    }
+    //     axios.create({
+    //         headers: {
+    //             'Content-Type': 'multipart/form-data'
+    //         }
+    //     }).post(`${url}/image/${job.id}`, formData).then(res=>{
+    //         alert(res.data)
+    //     }).catch(e=>{
+    //         alert(e)
+    //     })
+    // }
 
 
-    const addImage = async()=>{
-        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync()
+    // const addImage = async()=>{
+    //     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync()
 
-        if(status !== 'granted'){
-            Alert.alert(
-                'Necessário permissão para acessar arquivos',
-                'O aplicativo Loja de Serviço não teve permissão para acessar suas imagens. Se desejar o redirecionaremos para as configurações para ativar as permissões?',
-                [
-                    {
-                        text:'Cancelar'
-                    },
-                    {
-                        text:'Ok',
-                        onPress: ()=> Linking.openSettings()                        
-                    }
-                ]
-            )            
-        }
+    //     if(status !== 'granted'){
+    //         Alert.alert(
+    //             'Necessário permissão para acessar arquivos',
+    //             'O aplicativo Loja de Serviço não teve permissão para acessar suas imagens. Se desejar o redirecionaremos para as configurações para ativar as permissões?',
+    //             [
+    //                 {
+    //                     text:'Cancelar'
+    //                 },
+    //                 {
+    //                     text:'Ok',
+    //                     onPress: ()=> Linking.openSettings()                        
+    //                 }
+    //             ]
+    //         )            
+    //     }
 
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-            allowsEditing: true,
-            quality: 1
-        })
+    //     let result = await ImagePicker.launchImageLibraryAsync({
+    //         mediaTypes: ImagePicker.MediaTypeOptions.All,
+    //         allowsEditing: true,
+    //         quality: 1
+    //     })
 
-        // console.log(result)
+    //     // console.log(result)
         
-        if(!result.canceled){
-            const uriArray = result?.uri.split('')
-            const lastLetter = uriArray.length - 1
-            const fileType = `${uriArray[lastLetter - 1]}${uriArray[lastLetter]}`
-            if(fileType === 'ng' || fileType === 'eg' || fileType === 'pg'){
-                setImage(result.uri)
-                sendImage()
-                getImages()
-            }else if(fileType === 'p4'){
-                Alert.alert(
-                    'Ainda não é possível postar vídeos',
-                    'Estamos em fase de testes para esta operação para habilitarmos na nova atualização do app. Deseja retornar e escolher uma imagem?',
-                    [
-                        {
-                            text:'Cancelar'
-                        },
-                        {
-                            text:'Ok',
-                            onPress: ()=> addImage()
-                        }
-                    ]
-                )
-            }
-        }
+    //     if(!result.canceled){
+    //         const uriArray = result?.uri.split('')
+    //         const lastLetter = uriArray.length - 1
+    //         const fileType = `${uriArray[lastLetter - 1]}${uriArray[lastLetter]}`
+    //         if(fileType === 'ng' || fileType === 'eg' || fileType === 'pg'){
+    //             setImage(result.uri)
+    //             sendImage()
+    //             getImages()
+    //         }else if(fileType === 'p4'){
+    //             Alert.alert(
+    //                 'Ainda não é possível postar vídeos',
+    //                 'Estamos em fase de testes para esta operação para habilitarmos na nova atualização do app. Deseja retornar e escolher uma imagem?',
+    //                 [
+    //                     {
+    //                         text:'Cancelar'
+    //                     },
+    //                     {
+    //                         text:'Ok',
+    //                         onPress: ()=> addImage()
+    //                     }
+    //                 ]
+    //             )
+    //         }
+    //     }
 
-    }
+    // }
 
 
-    const removeImage = (id)=>{
-        Alert.alert(
-            'Deletar imagem',
-            'Tem certeza que deseja excluir a imagem selecionada',
-            [
-                {
-                    text:'Cancelar'
-                },
-                {
-                    text:'Ok',
-                    onPress: ()=>{
-                        axios.delete(`${url}/image/${id}`).then(res=>{
-                            alert(res.data)
-                            getImages()
-                        }).catch(e=>{
-                            alert(e.response.data)
-                        })
-                    }
-                }
-            ]
-        )
-    }
+    // const removeImage = (id)=>{
+    //     Alert.alert(
+    //         'Deletar imagem',
+    //         'Tem certeza que deseja excluir a imagem selecionada',
+    //         [
+    //             {
+    //                 text:'Cancelar'
+    //             },
+    //             {
+    //                 text:'Ok',
+    //                 onPress: ()=>{
+    //                     axios.delete(`${url}/image/${id}`).then(res=>{
+    //                         alert(res.data)
+    //                         getImages()
+    //                     }).catch(e=>{
+    //                         alert(e.response.data)
+    //                     })
+    //                 }
+    //             }
+    //         ]
+    //     )
+    // }
 
 
 
@@ -216,7 +216,7 @@ export default function Detail(props){
                     </View>
                 </View>
                 
-                <Modal
+                {/* <Modal
                     animationType="fade" 
                     transparent
                     visible={showModal}>
@@ -243,7 +243,7 @@ export default function Detail(props){
                     <Text style={{textAlign:'center', fontSize:15, color:'whitesmoke'}}>
                         Adicionar imnagem
                     </Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 
                 {/* <Video style={{width:100, height:100, borderRadius:10}}
                     ref={videoRef}
@@ -254,7 +254,7 @@ export default function Detail(props){
                     onPlaybackStatusUpdate={(status)=> setShowModal(()=> status)}/> */}
                 {/* <View style={{alignItems:'center'}}> */}
 
-                <FlatList
+                {/* <FlatList
                     contentContainerStyle={{alignItems:'center'}}
                     data={images}
                     keyExtractor={image => image.imageId}
@@ -268,7 +268,7 @@ export default function Detail(props){
                             <Image style={{width:100, height:100, margin:10, borderRadius:10}}
                                 source={{ uri: image?.imageSrc }}/>
                         </TouchableOpacity>                        
-                    )}/>
+                    )}/> */}
                 {/* </View> */}
             </View>
         </ImageBackground>

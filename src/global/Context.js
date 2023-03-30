@@ -37,7 +37,7 @@ export const Provider = (props)=>{
     axios.get(`${url}/jobs`).then(res=>{
       setJobs(res.data)
     }).catch(err=>{
-      alert(err.response.data)
+      alert('erro na função getAlljobs: '+err)
     })
   }
 
