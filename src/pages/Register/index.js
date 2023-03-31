@@ -3,6 +3,7 @@ import Context from '../../global/Context'
 import axios from 'axios'
 import { url } from '../../constants/urls'
 import styles from './style'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import {
   View,
   ScrollView,
@@ -15,7 +16,7 @@ import {
 
 
 export default function Register(props){
-  const { expoPushToken, sendPushNotifications } = useContext(Context)
+  const { expoPushToken, sendPushNotifications, getAllJobs } = useContext(Context)
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [phone, setPhone] = useState('')
@@ -24,7 +25,7 @@ export default function Register(props){
   
 
   
-  const registJob = ()=>{
+  const registJob = async()=>{
     const body = {
       title,
       description,
@@ -33,12 +34,19 @@ export default function Register(props){
       push_token: expoPushToken
     }
     
-    axios.post(`${url}/jobs`, body).then(res=>{
-      alert(`${title} cadastrado com sucesso!`)
+    axios({
+      method:'POST',
+      url:`${url}/jobs`,
+      headers: {
+        Authorization: await AsyncStorage.getItem('id')
+      },
+      data: body
+    }).then(res=>{
+      alert(res.data)
       props.navigation.navigate('List')
-      sendPushNotifications('Novo serviço cadastrado', `${title} acaba de ser cadastrado`)
-    }).catch(err=>{
-      alert(err.response.data)
+      getAllJobs()
+    }).catch(e=>{
+      alert(e.response.data)
     })
     
   }
@@ -86,6 +94,7 @@ export default function Register(props){
             <TextInput style={styles.textarea}
               onChangeText={setPeriod}
               value={period}
+              multiline={true}
               placeholderTextColor={placeholderBackground}
               placeholder='Período de atendimento'
               />

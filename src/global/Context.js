@@ -21,6 +21,7 @@ Notifications.setNotificationHandler({
 export const Provider = (props)=>{
   const [jobs, setJobs] = useState([])
   const [job, setJob] = useState({})
+  const [user, setUser] = useState({})
   const [expoPushToken, setExpoPushToken] = useState('')
   
 
@@ -33,11 +34,15 @@ export const Provider = (props)=>{
   }, [])
     
   
-  const getAllJobs = ()=>{
-    axios.get(`${url}/jobs`).then(res=>{
+  const getAllJobs = async()=>{
+    axios.get(`${url}/jobs`, {
+      headers: {
+        Authorization: await AsyncStorage.getItem('id')
+      }
+    }).then(res=>{
       setJobs(res.data)
     }).catch(err=>{
-      alert('erro na função getAlljobs: '+err)
+      alert('erro na função getAlljobs: '+err.response.data)
     })
   }
 
@@ -108,12 +113,27 @@ export const Provider = (props)=>{
   }
 
 
+  const getProfile = async()=>{
+    axios.get(`${url}/user`, {
+        headers: {
+            Authorization: await AsyncStorage.getItem('id')
+        }
+    }).then(res=>{
+        setUser(res.data)
+    }).catch(e=>{
+        alert(e.response.data)
+    })
+  }
+
+
     
   return<Context.Provider value={{
     getAllJobs,
     jobs,
     job,
     setJob,
+    user,
+    getProfile,
     expoPushToken,
     updatePushToken,
     sendPushNotifications
