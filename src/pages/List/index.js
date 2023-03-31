@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useContext, useCallback } from 'react'
-import styles from './style'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import Context from '../../global/Context'
 import axios from 'axios'
 import { url } from '../../constants/urls'
 import { convertPhone } from '../../utils/convertPhone'
 import { Searchbar } from 'react-native-paper'
+import styles from './style'
 import {
   View,
   Text,
@@ -21,8 +22,6 @@ export default function List(props){
   const { getAllJobs, jobs, setJob } = useContext(Context)  
   const [refreshing, setRefreshing] = useState(false)
   const [searchWord, setSearchWord] = useState('')
-   
-  
 
   useEffect(()=>{
     getAllJobs()
@@ -49,8 +48,12 @@ export default function List(props){
   
 
 
-  const getJobById = (job)=>{
-    axios.get(`${url}/job/${job.id}`).then(res=>{
+  const getJobById = async(job)=>{
+    axios.get(`${url}/job/${job.id}`, {
+      headers: {
+        Authorization: await AsyncStorage.getItem('id')
+      }
+    }).then(res=>{
       setJob(res.data)
       props.navigation.navigate('Detalhes')
     }).catch(e=>{
@@ -81,7 +84,7 @@ export default function List(props){
           />
         <ScrollView refreshControl={<RefreshControl onRefresh={onRefresh}
           refreshing={refreshing}/>}>
-          {found && found.map(job=>{
+          {found.length > 0 ? found.map(job=>{
             return(
               <View key={job.id}
                 style={styles.card}>
@@ -101,7 +104,11 @@ export default function List(props){
                 </View>
               </View>
             )
-          })}
+          }) : <TouchableOpacity onPress={()=> props.navigation.navigate('Register')}>
+                  <Text style={{textAlign:'center', fontSize:20, color:'whitesmoke'}}>
+                    Adicionar serviço
+                  </Text>
+               </TouchableOpacity>}
         </ScrollView>
       </View>
     </ImageBackground>
