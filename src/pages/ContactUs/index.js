@@ -31,11 +31,11 @@ export default function ContactUs(props){
                     francadasilvaflamarion@gmail.com{'\n\n\n'}
                     <TouchableOpacity
                         onPress={()=> Linking.openURL(
-                            `https://api.whatsapp.com/send?phone=5571983882465`
+                            `https://api.whatsapp.com/send?phone=5571984707037`
                         )}>
                         <Zap name='whatsapp' size={50} color='green'/>
                     </TouchableOpacity>{'\n'}
-                    71 8388-2465
+                    71 8470-7037
                 </Text>
             </View>
         </ImageBackground>

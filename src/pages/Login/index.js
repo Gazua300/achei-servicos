@@ -15,8 +15,8 @@ import {
 
 
 export default function Login(props){
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('visitante@email.com')
+  const [password, setPassword] = useState('123456')
   const placeholderBackground = 'rgba(255, 255, 255, 0.5)'
 
 
@@ -42,8 +42,6 @@ export default function Login(props){
     axios.post(`${url}/login`, body).then(async res=>{
       await AsyncStorage.setItem('id', res.data)
       props.navigation.navigate('List')
-      setEmail('')
-      setPassword('')
     }).catch(err=>{
       alert(err.response.data)
     })

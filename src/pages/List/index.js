@@ -27,6 +27,33 @@ export default function List(props){
     getAllJobs()
   }, [])
 
+  useEffect(()=>{
+    (async()=>{
+      axios.get(`${url}/jobs`, {
+        headers: {
+          Authorization: await AsyncStorage.getItem('id')
+        }
+      }).then((res)=>{
+        console.log(res.data)
+      }).catch(async err=>{
+        if(err.response.data === 'jwt expired'){
+          await AsyncStorage.clear()
+          props.navigation.navigate('Login')
+        }
+      })
+    })()
+  }, [])
+
+  useEffect(()=>{
+    (async()=>{
+      const token = await AsyncStorage.getItem('id')
+
+      if(!token){
+        props.navigation.navigate('Login')
+      }
+    })()
+  }, [])
+
 
   BackHandler.addEventListener('hardwareBackPress', ()=>{
     

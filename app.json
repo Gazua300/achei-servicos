@@ -2,7 +2,7 @@
   "expo": {
     "name": "Loja de Serviços",
     "slug": "achei-servicos",
-    "version": "1.0.9",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -25,7 +25,7 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#151E3D"
       },
-      "versionCode": 10,
+      "versionCode": 11,
       "permissions": [
         "android.permission.READ_CONTACTS",
         "android.permission.WRITE_CONTACTS"
